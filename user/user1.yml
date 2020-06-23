@@ -1,0 +1,13 @@
+- name: creating user with password
+  hosts: all
+  become: true
+  vars_files:
+  - my_pass.yml
+  tasks:
+  - name: creating user amit
+    user:
+        name: amit
+        password: "{{ my_pass | password_hash ('sha512') }}" 
+        groups: wheel 
+        state: present
+   

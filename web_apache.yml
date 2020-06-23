@@ -1,0 +1,43 @@
+- name: Deploy the apache web server
+  hosts: all
+  become: true
+  tasks: 
+
+  - name: install and update the apache web server
+    yum:
+        name: 
+        - httpd 
+        - firewalld
+        state: installed
+
+  - name: start firewall service
+    service: 
+        name: firewalld
+        state: started
+        enabled: yes
+
+  - name: copy website code
+    copy:
+        src: code/
+        dest: /var/www/html/
+
+  - name: defaule apache port is 8080
+    lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^Listen '
+        insertafter: '^#Listen '
+        line: Listen 8080
+        backup: yes
+ 
+  - name: open the port 8080
+    firewalld:
+        port: 8080/tcp
+        permanent: yes
+        state: enabled
+        immediate: true
+  - name: start the httpd and enabled
+    service: 
+        name: httpd
+        state: started
+        enabled: true
+        

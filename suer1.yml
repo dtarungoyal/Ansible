@@ -1,0 +1,10 @@
+- hosts: all 
+  become: true
+  vars_files:
+    - my_vault.yml 
+  tasks: 
+    - user:
+        name: ans
+        groups: wheel
+        password: "{{ my_password | password_hash('sha512')  }}"
+        state:  present 

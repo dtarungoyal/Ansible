@@ -1,0 +1,14 @@
+- name: import secondory or other tasks
+  hosts: all
+  become: true 
+  tasks: 
+  # name: create the folder
+  - file:   
+        path: /test
+        state: touch
+        owner: ans
+        group: centos
+
+
+  - import_tasks: /home/centos/ansible/secondory.yml
+  

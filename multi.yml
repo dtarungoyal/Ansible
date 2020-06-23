@@ -1,0 +1,19 @@
+- name: first play
+  hosts: all 
+  tasks:
+  - name: add user ravi
+    user: 
+        name: ravi
+        state: present
+  
+
+- name: second play
+  hosts: all
+  tasks: 
+  - name: download ec2-instance playbook
+    get_url: 
+        url: https://github.com/acandid/aws_ec2.git
+        dest: /tmp
+        owner: centos
+        group: centos
+        #recursive: yes

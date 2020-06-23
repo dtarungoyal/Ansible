@@ -1,0 +1,18 @@
+- hosts: all 
+  become: true
+  tasks: 
+  - name: create the file in tmp
+    file: 
+        path: /tmp/test
+        state: directory
+        owner: centos
+        group: centos
+        recurse: yes
+  - name: copy /etc/fstab to tmp/test
+    copy:
+        src: /etc/fstab
+        dest: /tmp/test
+  - name: restart the cron service
+    service:
+        name: crond
+        state: restarted
